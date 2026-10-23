@@ -206,11 +206,12 @@
            CONFIG: change these three things
         ---------------------------------------------------------- */
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBulzTNIlELwTWcawfI3rvFSPqmH1br-WmESPRRqYcLNBpzrQZocTSScei_uDnUs7u/exec';
-        const QUESTION   = 'Коя тема те интересува най-много?';
+        const QUESTION   = 'Какво искаш да научиш от шибари?';
         const OPTIONS    = [
-            'Опция 1',
-            'Опция 2',
-            'Опция 3'
+            'Динамика, свързване и flow в една сесия',
+            'Специфични харнеси и връзвания',
+            'Импровизация и създаване на връзвания на момента',
+            'Малки технически детайли ',
         ];
         /* ---------------------------------------------------------- */
 
@@ -246,7 +247,7 @@
         try {
             if (localStorage.getItem(STORAGE_KEY)) { showThanks(); }
         } catch (e) { /* storage unavailable, ignore */ }
-
+ß
         form.addEventListener('submit', function (event) {
             event.preventDefault();
             messageEl.textContent = '';
