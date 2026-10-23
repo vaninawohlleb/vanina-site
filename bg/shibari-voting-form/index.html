@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гласувай | Ванина Цонева</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-teal: #1B3838;
+            --color-terracotta: #E1543C;
+            --color-beige: #E7E4DE;
+            --color-white: #FFFFFF;
+            --color-text: #111111;
+            --color-border-light: #D6D2CA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--color-text);
+            background-color: var(--color-beige);
+            font-size: 17px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 560px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border-light);
+            padding: 48px 40px;
+        }
+
+        .title {
+            font-size: 32px;
+            line-height: 1.25;
+            color: var(--color-teal);
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #333333;
+            font-weight: 300;
+            margin-bottom: 32px;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 28px;
+            border: none;
+        }
+
+        .option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .option span {
+            display: block;
+            padding: 16px 20px;
+            border: 1px solid var(--color-border-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option span:hover {
+            border-color: var(--color-teal);
+        }
+
+        .option input:checked + span {
+            background-color: var(--color-teal);
+            border-color: var(--color-teal);
+            color: var(--color-white);
+        }
+
+        .option input:focus-visible + span {
+            outline: 2px solid var(--color-terracotta);
+            outline-offset: 2px;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 14px;
+            color: #333333;
+            margin-bottom: 8px;
+        }
+
+        .field {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--color-border-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            margin-bottom: 28px;
+            background-color: var(--color-white);
+        }
+
+        .field:focus {
+            outline: none;
+            border-color: var(--color-teal);
+        }
+
+        .hp {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: var(--color-terracotta);
+            color: var(--color-white);
+            border: 1px solid var(--color-terracotta);
+            padding: 14px 28px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--color-terracotta);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .message {
+            margin-top: 16px;
+            font-size: 15px;
+            color: var(--color-terracotta);
+            min-height: 24px;
+        }
+
+        .thanks {
+            display: none;
+            text-align: center;
+        }
+
+        .thanks .title {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+
+        <!-- VOTE FORM -->
+        <form id="vote-form" novalidate>
+            <h1 class="title" id="question">Коя тема те интересува най-много?</h1>
+            <p class="subtitle" id="subtitle">Избери една опция. Гласуването отнема по-малко от минута.</p>
+
+            <fieldset class="options" id="options"></fieldset>
+
+            <!-- Honeypot against bots -->
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <label class="field-label" for="contact">Имейл (по желание, ако искаш да ти пишем за резултата)</label>
+            <input class="field" type="email" id="contact" name="contact" placeholder="твоят@имейл.com">
+
+            <button type="submit" class="btn-primary" id="submit-btn">Гласувам</button>
+            <p class="message" id="message" role="alert"></p>
+        </form>
+
+        <!-- THANK YOU -->
+        <div class="thanks" id="thanks">
+            <h2 class="title">Благодаря за гласа!</h2>
+            <p class="subtitle" style="margin-bottom:0;">Гласът ти е записан.</p>
+        </div>
+
+    </div>
+
+    <script>
+        /* ----------------------------------------------------------
+           CONFIG: change these three things
+        ---------------------------------------------------------- */
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBulzTNIlELwTWcawfI3rvFSPqmH1br-WmESPRRqYcLNBpzrQZocTSScei_uDnUs7u/exec';
+        const QUESTION   = 'Коя тема те интересува най-много?';
+        const OPTIONS    = [
+            'Опция 1',
+            'Опция 2',
+            'Опция 3'
+        ];
+        /* ---------------------------------------------------------- */
+
+        const form = document.getElementById('vote-form');
+        const optionsEl = document.getElementById('options');
+        const messageEl = document.getElementById('message');
+        const submitBtn = document.getElementById('submit-btn');
+        const thanksEl = document.getElementById('thanks');
+        const STORAGE_KEY = 'voted:' + QUESTION;
+
+        document.getElementById('question').textContent = QUESTION;
+
+        OPTIONS.forEach(function (text, i) {
+            const label = document.createElement('label');
+            label.className = 'option';
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'option';
+            input.value = text;
+            input.id = 'opt' + i;
+            const span = document.createElement('span');
+            span.textContent = text;
+            label.appendChild(input);
+            label.appendChild(span);
+            optionsEl.appendChild(label);
+        });
+
+        function showThanks() {
+            form.style.display = 'none';
+            thanksEl.style.display = 'block';
+        }
+
+        try {
+            if (localStorage.getItem(STORAGE_KEY)) { showThanks(); }
+        } catch (e) { /* storage unavailable, ignore */ }
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            messageEl.textContent = '';
+
+            const chosen = form.querySelector('input[name="option"]:checked');
+            if (!chosen) {
+                messageEl.textContent = 'Моля, избери една опция.';
+                return;
+            }
+            if (form.website.value) { return; } // bot
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Изпращам...';
+
+            const body = new URLSearchParams();
+            body.append('option', chosen.value);
+            body.append('contact', form.contact.value.trim());
+
+            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: body })
+                .then(function () {
+                    try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+                    showThanks();
+                })
+                .catch(function () {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Гласувам';
+                    messageEl.textContent = 'Нещо се обърка. Опитай отново.';
+                });
+        });
+    </script>
+</body>
+</html>
