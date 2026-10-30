@@ -16,8 +16,8 @@
    11. Footer and newsletter
    12. Dark theme       — add class="theme-dark" to <body>
    13. Single-card form — add class="page-form" to <body> (voting form)
-   14. Landing pages (benefit list, details card, callout)
-
+   14. Landing pages (big photo hero, benefit list, details card, callout, photo split)
+   ===================================================================== */
 
 
 /* ---------------------------------------------------------------------
@@ -1482,4 +1482,61 @@ input {
 .cta-band .cta-title {
     color: var(--color-white);
     margin-bottom: 32px;
+}
+
+/* Big photo hero with the title on top of it */
+.hero--landing {
+    min-height: 82vh;
+    background-position: center 30%;
+}
+
+.hero--landing::before {
+    background: linear-gradient(0deg, rgba(11, 26, 26, 0.85) 0%, rgba(11, 26, 26, 0.35) 55%, rgba(11, 26, 26, 0.2) 100%);
+}
+
+.hero--landing .hero__content {
+    width: 100%;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 120px 24px 72px;
+}
+
+.hero--landing .hero__title,
+.hero--landing .hero__subtitle {
+    max-width: 720px;
+}
+
+.hero--landing .hero__subtitle {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-beige);
+    margin-bottom: 32px;
+}
+
+/* Text beside a smaller photo */
+.photo-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.photo-split__image {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .photo-split {
+        grid-template-columns: 2fr 3fr;
+        gap: 64px;
+    }
+    .photo-split--reverse > :first-child {
+        order: 2;
+    }
 }
