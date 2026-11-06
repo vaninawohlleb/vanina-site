@@ -1713,29 +1713,33 @@ h3.hero-eyebrow {
     .faq-item[open] .faq-answer { animation: none; }
 }
 
-/* Timeline: how an event unfolds, step by step, side by side on desktop */
+/* Timeline: how an event unfolds, step by step, centred */
 .timeline {
     list-style: none;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 48px;
     max-width: 1000px;
     margin: 0 auto;
     padding: 0;
     counter-reset: timeline;
+    text-align: center;
 }
 
 .timeline__item {
     counter-increment: timeline;
     position: relative;
-    padding-left: 64px;
+    padding-top: 68px;
+    max-width: 360px;
+    margin: 0 auto;
 }
 
 .timeline__item::before {
     content: counter(timeline);
     position: absolute;
-    left: 0;
+    left: 50%;
     top: 0;
+    transform: translateX(-50%);
     width: 44px;
     height: 44px;
     display: flex;
@@ -1766,19 +1770,18 @@ h3.hero-eyebrow {
 @media (min-width: 860px) {
     .timeline {
         grid-template-columns: repeat(3, 1fr);
-        gap: 48px;
     }
     .timeline__item {
-        padding-left: 0;
-        padding-top: 68px;
+        max-width: none;
+        margin: 0;
     }
     /* Line joining the numbers */
     .timeline__item:not(:last-child)::after {
         content: "";
         position: absolute;
         top: 22px;
-        left: 60px;
-        right: -32px;
+        left: calc(50% + 38px);
+        right: calc(-50% - 10px);
         border-top: 1px solid var(--color-border-light);
     }
 }
@@ -1827,10 +1830,13 @@ h3.hero-eyebrow {
 
 @media (min-width: 640px) {
     .fact-grid { grid-template-columns: repeat(2, 1fr); }
+    .fact-grid__item--wide { grid-column: span 2; }
 }
 
 @media (min-width: 960px) {
-    .fact-grid { grid-template-columns: repeat(3, 1fr); }
+    .fact-grid { grid-template-columns: repeat(6, 1fr); }
+    .fact-grid__item { grid-column: span 2; }
+    .fact-grid__item--wide { grid-column: span 3; }
 }
 
 /* A warm personal note below a block of facts */
@@ -1849,5 +1855,46 @@ h3.hero-eyebrow {
 @media (min-width: 768px) {
     .photo-split--reverse {
         grid-template-columns: 3fr 2fr;
+    }
+}
+
+/* Whole paragraph in the italic title font, on a coloured band */
+.lead-italic {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.5;
+    color: var(--color-white);
+}
+
+/* Inline text link */
+.text-link {
+    color: var(--color-terracotta);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.text-link:hover {
+    color: var(--heading);
+}
+
+/* Full-width photo band that stays still while the page scrolls past it.
+   Phones and tablets don't support fixed backgrounds well, so there it scrolls normally. */
+.photo-band {
+    background-color: var(--color-deep);
+    min-height: 420px;
+    height: 70vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+@media (max-width: 900px), (hover: none) {
+    .photo-band {
+        height: 50vh;
+        min-height: 300px;
+        background-attachment: scroll;
     }
 }
