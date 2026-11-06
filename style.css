@@ -1712,3 +1712,142 @@ h3.hero-eyebrow {
     .faq-item::details-content { transition: none; }
     .faq-item[open] .faq-answer { animation: none; }
 }
+
+/* Timeline: how an event unfolds, step by step, side by side on desktop */
+.timeline {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+    counter-reset: timeline;
+}
+
+.timeline__item {
+    counter-increment: timeline;
+    position: relative;
+    padding-left: 64px;
+}
+
+.timeline__item::before {
+    content: counter(timeline);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-terracotta);
+    border-radius: 50% !important;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--color-terracotta);
+    background-color: var(--page-bg);
+}
+
+.timeline__title {
+    font-size: 22px;
+    color: var(--heading);
+    margin-bottom: 8px;
+}
+
+.timeline__text {
+    color: var(--copy-soft);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+@media (min-width: 860px) {
+    .timeline {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 48px;
+    }
+    .timeline__item {
+        padding-left: 0;
+        padding-top: 68px;
+    }
+    /* Line joining the numbers */
+    .timeline__item:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 22px;
+        left: 60px;
+        right: -32px;
+        border-top: 1px solid var(--color-border-light);
+    }
+}
+
+/* Fact tiles: short label + value, e.g. price, language, what to bring */
+.fact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-top: 1px solid var(--color-border-light);
+    border-left: 1px solid var(--color-border-light);
+    background-color: var(--surface);
+}
+
+.fact-grid__item {
+    padding: 28px;
+    border-right: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.fact-grid__label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-terracotta);
+    margin-bottom: 10px;
+}
+
+.fact-grid__value {
+    color: var(--copy);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.fact-grid__value--big {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--heading);
+}
+
+@media (min-width: 640px) {
+    .fact-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 960px) {
+    .fact-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* A warm personal note below a block of facts */
+.note {
+    max-width: 720px;
+    margin: 48px auto 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--heading);
+}
+
+/* Reversed photo split: text keeps the wider column */
+@media (min-width: 768px) {
+    .photo-split--reverse {
+        grid-template-columns: 3fr 2fr;
+    }
+}
