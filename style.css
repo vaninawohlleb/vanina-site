@@ -1673,3 +1673,42 @@ h3.hero-eyebrow {
     font-style: normal;
     font-weight: 600;
 }
+
+/* FAQ: smooth open and close.
+   The answer fades and slides in everywhere; browsers that support
+   ::details-content (Chrome, Edge, Safari 18.4+) also animate the height. */
+:root {
+    interpolate-size: allow-keywords;
+}
+
+.faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.35s ease, content-visibility 0.35s ease allow-discrete;
+}
+
+.faq-item[open]::details-content {
+    block-size: auto;
+}
+
+.faq-item[open] .faq-answer {
+    animation: faq-reveal 0.35s ease;
+}
+
+@keyframes faq-reveal {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.faq-item summary::after {
+    transition: color 0.2s ease;
+}
+
+.faq-item summary:hover::after {
+    color: var(--heading);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .faq-item::details-content { transition: none; }
+    .faq-item[open] .faq-answer { animation: none; }
+}
