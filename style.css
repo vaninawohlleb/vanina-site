@@ -1621,3 +1621,55 @@ summary:focus-visible {
 .faq-answer p + p {
     margin-top: 12px;
 }
+
+/* Big centred statement on a dark band (e.g. "How I teach") */
+.statement {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(26px, 3.4vw, 40px);
+    line-height: 1.35;
+    color: var(--color-white);
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto 64px;
+}
+
+/* Short paragraphs in columns, each under a thin rule */
+.text-columns p {
+    color: rgba(231, 228, 222, 0.78);
+    font-weight: 300;
+    line-height: 1.7;
+    padding-top: 20px;
+    border-top: 1px solid rgba(231, 228, 222, 0.25);
+}
+
+/* Details card with a side column (e.g. "Good to know") */
+.details-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: start;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.details-layout .details-card {
+    max-width: none;
+    margin: 0;
+}
+
+@media (min-width: 900px) {
+    .details-layout {
+        grid-template-columns: 3fr 2fr;
+        gap: 56px;
+    }
+}
+
+/* Eyebrow used as a heading: keep the label font, not the title font */
+h2.hero-eyebrow,
+h3.hero-eyebrow {
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 600;
+}
