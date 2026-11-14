@@ -1898,3 +1898,87 @@ h3.hero-eyebrow {
         background-attachment: scroll;
     }
 }
+
+/* Pillars: three short ideas side by side, each under a terracotta rule */
+.pillars {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.pillar {
+    border-top: 2px solid var(--color-terracotta);
+    padding-top: 24px;
+}
+
+.pillar__title {
+    font-size: 24px;
+    color: var(--heading);
+    margin-bottom: 12px;
+}
+
+.pillar__text {
+    color: var(--copy-soft);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+@media (min-width: 860px) {
+    .pillars {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 48px;
+    }
+}
+
+/* Persona cards: "this is for you if..." */
+.persona-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.persona-card {
+    background-color: var(--surface);
+    border: 1px solid var(--color-border-light);
+    padding: 36px 32px;
+}
+
+.persona-card__index {
+    display: block;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--color-terracotta);
+    margin-bottom: 20px;
+}
+
+.persona-card__title {
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--heading);
+    margin-bottom: 14px;
+}
+
+.persona-card__text {
+    color: var(--copy-soft);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+@media (min-width: 960px) {
+    .persona-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Text block placed beside the details card */
+.details-aside p {
+    color: var(--copy-soft);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
