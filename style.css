@@ -2105,3 +2105,15 @@ h3.hero-eyebrow {
 .intro-text + .intro-text {
     margin-top: 20px;
 }
+
+/* Full-photo heroes: the photo stays still and the text scrolls over it.
+   Phones and tablets don't handle fixed backgrounds well, so there the photo scrolls normally. */
+.hero--landing {
+    background-attachment: fixed;
+}
+
+@media (max-width: 900px), (hover: none) {
+    .hero--landing {
+        background-attachment: scroll;
+    }
+}
