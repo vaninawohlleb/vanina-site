@@ -2100,3 +2100,8 @@ h3.hero-eyebrow {
 @media (min-width: 860px) {
     .package-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Space between consecutive intro paragraphs */
+.intro-text + .intro-text {
+    margin-top: 20px;
+}
