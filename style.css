@@ -1993,3 +1993,24 @@ h3.hero-eyebrow {
     color: var(--heading);
     margin: 0 0 24px;
 }
+
+/* Media logos: centred row; --dark turns a white logo dark so it shows on light backgrounds */
+.logo-strip--center {
+    justify-content: center;
+}
+
+.logo-strip__logo--dark {
+    filter: brightness(0);
+}
+
+/* Short line of text under the newsletter heading */
+.newsletter__text {
+    color: var(--copy-soft);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Section titles marked white on dark bands (e.g. home page online courses) */
+.section-title.text-white {
+    color: var(--color-white);
+}
